@@ -41,7 +41,7 @@ export const computeChild = (
     // Compute child based on employee data
     const computedChildData = assignSecretSanta(employeeData, previousData);
 
-    // Step 5: Convert JSON to CSV format manually
+    // Convert JSON to CSV format manually
     let csvContent =
       "Employee_Name,Employee_EmailID,Secret_Child_Name,Secret_Child_EmailID\n";
     computedChildData.forEach(
@@ -55,14 +55,14 @@ export const computeChild = (
       }
     );
 
-    // Step 6: Set headers for file download
+    // Set headers for file download
     res.setHeader("Content-Type", "text/csv");
     res.setHeader(
       "Content-Disposition",
       "attachment; filename=SecretSantaAssignments.csv"
     );
 
-    // Step 7: Send CSV content
+    // Send CSV content
     res.status(200).send(csvContent);
   } catch (error) {
     next(error);
