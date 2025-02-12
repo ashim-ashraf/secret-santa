@@ -4,6 +4,10 @@ import { BadRequestError } from "../middlewares/error-handler";
 import { assignSecretSanta } from "../utils/assign-secret-santa";
 import { Employee, PreviousAssignment } from "../types/employee";
 import { parseCSV } from "../helpers/parse-CSV";
+import {
+  validateEmployeeList,
+  validatePreviousAssignments,
+} from "../helpers/validation";
 
 export const computeChild = (
   req: Request,
@@ -37,6 +41,12 @@ export const computeChild = (
           Secret_Child_EmailID: row.Secret_Child_EmailID,
         }))
       : null;
+
+    // validation
+    validateEmployeeList(employeeData);
+    if (previousData) {
+      validatePreviousAssignments(previousData);
+    }
 
     // Compute child based on employee data
     const computedChildData = assignSecretSanta(employeeData, previousData);
