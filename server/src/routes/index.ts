@@ -1,10 +1,10 @@
 import { Router } from "express";
-
+import { computeChild } from "../controllers/generate-child";
 const router = Router();
 
 /**
  * @swagger
- * /secret-santa/assign:
+ * /generate-secret-child:
  *   post:
  *     summary: Assign Secret Santa
  *     description: Assigns a Secret Santa to employees based on input CSV.
@@ -15,8 +15,6 @@ const router = Router();
  *         description: Server error.
  */
 
-router.get("/", (req, res) => {
-  res.send("Server is running!");
-});
+router.post("/generate-secret-child", computeChild);
 
 export default router;
