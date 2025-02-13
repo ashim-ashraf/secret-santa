@@ -1,16 +1,49 @@
+import { BadRequestError } from "../middlewares/error-handler";
+
 /**
  * Validates employee list format
- * @param data - Parsed CSV data
- * @returns boolean
+ * @param data - Parsed CSV data (array of objects)
  */
 export const validateEmployeeList = (data: any[]): boolean => {
   if (!Array.isArray(data) || data.length === 0) {
-    throw new Error("Invalid employee list: Data is empty or not an array.");
+    throw new BadRequestError(
+      "Invalid employee list: Data is empty or not an array."
+    );
   }
 
-  for (let row of data) {
-    if (!row.Employee_Name || !row.Employee_EmailID) {
-      throw new Error("Invalid employee entry");
+  // Expected headers
+  const requiredHeaders = ["Employee_Name", "Employee_EmailID"];
+
+  // Get actual headers from the first row
+  const actualHeaders = Object.keys(data[0]);
+
+  // Check if there are extra headers
+  const extraHeaders = actualHeaders.filter(
+    (header) => !requiredHeaders.includes(header)
+  );
+  if (extraHeaders.length > 0) {
+    throw new BadRequestError(
+      `Invalid headers found: ${extraHeaders.join(", ")}`
+    );
+  }
+
+  // Check if required headers are present
+  for (const header of requiredHeaders) {
+    if (!actualHeaders.includes(header)) {
+      throw new BadRequestError(`Missing required header: ${header}`);
+    }
+  }
+
+  // Validate each row
+  for (const row of data) {
+    if (
+      !row.Employee_Name ||
+      !row.Employee_EmailID ||
+      Object.keys(row).length !== 2 // Ensure no extra columns
+    ) {
+      throw new BadRequestError(
+        "Invalid row: Each row must have only Employee_Name and Employee_EmailID."
+      );
     }
   }
 
@@ -24,19 +57,51 @@ export const validateEmployeeList = (data: any[]): boolean => {
  */
 export const validatePreviousAssignments = (data: any[]): boolean => {
   if (!Array.isArray(data) || data.length === 0) {
-    throw new Error(
+    throw new BadRequestError(
       "Invalid previous assignments: Data is empty or not an array."
     );
   }
 
-  for (let row of data) {
+  // Expected headers
+  const requiredHeaders = [
+    "Employee_Name",
+    "Employee_EmailID",
+    "Secret_Child_Name",
+    "Secret_Child_EmailID",
+  ];
+
+  // Get actual headers from the first row
+  const actualHeaders = Object.keys(data[0]);
+
+  // Check if there are extra headers
+  const extraHeaders = actualHeaders.filter(
+    (header) => !requiredHeaders.includes(header)
+  );
+  if (extraHeaders.length > 0) {
+    throw new BadRequestError(
+      `Invalid headers found: ${extraHeaders.join(", ")}`
+    );
+  }
+
+  // Check if required headers are present
+  for (const header of requiredHeaders) {
+    if (!actualHeaders.includes(header)) {
+      throw new BadRequestError(`Missing required header: ${header}`);
+    }
+  }
+
+  // Validate each row
+  for (const row of data) {
     if (
       !row.Employee_Name ||
       !row.Employee_EmailID ||
       !row.Secret_Child_Name ||
-      !row.Secret_Child_EmailID
+      !row.Secret_Child_EmailID ||
+      Object.keys(row).length !== 4 // this is to ensure no extra columns
     ) {
-      throw new Error("Invalid previous assignment entry");
+      throw new BadRequestError(
+        "Invalid row: Each row must have only Employee_Name, Employee_EmailID, Secret_Child_Name, and Secret_Child_EmailID."
+      );
     }
   }
 

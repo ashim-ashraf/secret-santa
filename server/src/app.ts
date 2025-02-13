@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(fileUpload());
 
 //Routes
-app.use("/", routes);
+app.use("/api/v1", routes);
 
 setupSwagger(app);
 

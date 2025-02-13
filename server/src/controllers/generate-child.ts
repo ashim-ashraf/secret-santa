@@ -3,7 +3,7 @@ import { UploadedFile } from "express-fileupload";
 import { BadRequestError } from "../middlewares/error-handler";
 import { assignSecretSanta } from "../utils/assign-secret-santa";
 import { Employee, PreviousAssignment } from "../types/employee";
-import { parseCSV } from "../helpers/parse-CSV";
+import { parseCSV } from "../helpers/parse-csv";
 import {
   validateEmployeeList,
   validatePreviousAssignments,
@@ -27,6 +27,12 @@ export const computeChild = (
     const employeeDataRaw = parseCSV(employeeFile);
     const previousDataRaw = previousFile ? parseCSV(previousFile) : null;
 
+    // validation
+    validateEmployeeList(employeeDataRaw);
+    if (previousDataRaw) {
+      validatePreviousAssignments(previousDataRaw);
+    }
+
     // Convert parsed CSV data to Employee[] type
     const employeeData: Employee[] = employeeDataRaw.map((row) => ({
       Employee_Name: row.Employee_Name,
@@ -41,12 +47,6 @@ export const computeChild = (
           Secret_Child_EmailID: row.Secret_Child_EmailID,
         }))
       : null;
-
-    // validation
-    validateEmployeeList(employeeData);
-    if (previousData) {
-      validatePreviousAssignments(previousData);
-    }
 
     // Compute child based on employee data
     const computedChildData = assignSecretSanta(employeeData, previousData);

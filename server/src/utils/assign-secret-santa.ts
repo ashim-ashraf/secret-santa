@@ -1,3 +1,4 @@
+import { BadRequestError } from "../middlewares/error-handler";
 import { Employee, EmployeeAssignment, PreviousAssignment } from "../types/employee";
 
 export const assignSecretSanta = (
@@ -5,7 +6,7 @@ export const assignSecretSanta = (
   previousData: PreviousAssignment[] | null
 ): EmployeeAssignment[] => {
   if (employees.length < 2) {
-    throw new Error("At least two employees are required for Secret Santa.");
+    throw new BadRequestError("At least two employees are required for Secret Santa.");
   }
 
   let assignments: EmployeeAssignment[] = [];
