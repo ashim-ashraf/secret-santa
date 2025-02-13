@@ -22,15 +22,13 @@ export const validateEmployeeList = (data: any[]): boolean => {
     (header) => !requiredHeaders.includes(header)
   );
   if (extraHeaders.length > 0) {
-    throw new BadRequestError(
-      `Invalid headers found: ${extraHeaders.join(", ")}`
-    );
+    throw new BadRequestError("Invalid headers found.");
   }
 
   // Check if required headers are present
   for (const header of requiredHeaders) {
     if (!actualHeaders.includes(header)) {
-      throw new BadRequestError(`Missing required header: ${header}`);
+      throw new BadRequestError("Missing required header.");
     }
   }
 
@@ -79,14 +77,14 @@ export const validatePreviousAssignments = (data: any[]): boolean => {
   );
   if (extraHeaders.length > 0) {
     throw new BadRequestError(
-      `Invalid headers found: ${extraHeaders.join(", ")}`
+      "Invalid headers found."
     );
   }
 
   // Check if required headers are present
   for (const header of requiredHeaders) {
     if (!actualHeaders.includes(header)) {
-      throw new BadRequestError(`Missing required header: ${header}`);
+      throw new BadRequestError("Missing required header.");
     }
   }
 

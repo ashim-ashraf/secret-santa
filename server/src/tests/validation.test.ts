@@ -30,7 +30,7 @@ describe("Validation Functions", () => {
         { Employee_Name: "John Doe" }, // Missing Employee_EmailID
       ];
       expect(() => validateEmployeeList(invalidData)).toThrow(
-        "Invalid employee entry"
+        "Missing required header."
       );
     });
   });
@@ -70,7 +70,7 @@ describe("Validation Functions", () => {
         },
       ];
       expect(() => validatePreviousAssignments(invalidData)).toThrow(
-        "Invalid previous assignment entry"
+        "Missing required header."
       );
     });
   });
