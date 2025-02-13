@@ -31,6 +31,8 @@ SECRET-SANTA/
 │-- .env          # Environment variables
 │-- package.json  # Dependencies and scripts
 │-- README.md     # Project documentation
+│-- employee_list.csv        # Dummy file for testing
+│-- previous_assignments.csv # Dummy file for testing
 ```  
 
 ---
