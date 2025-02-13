@@ -5,6 +5,32 @@ This is a full-stack Secret Santa application that allows users to upload employ
 
 ---
 
+## 🎯 Workflow & Business Logic  
+
+### **How the App Works**  
+1. **User Uploads Employee List**  
+   - The user selects a **CSV file** containing employee details (Name, Email).  
+   - Optionally, the user can upload the **previous year's assignments** to prevent duplicate pairings.  
+
+2. **Processing the Assignments**  
+   - The backend reads the employee list and shuffles it.  
+   - It assigns a **Secret Santa** to each employee while ensuring:  
+     - An employee is not assigned to themselves.  
+     - If a previous year’s list exists, the same pair is **not repeated**.  
+     - The algorithm tries to ensure a fair random distribution.  
+
+3. **Displaying & Downloading Results**  
+   - The assignments are displayed in a table format on the frontend.  
+   - Users can **download the assignments** as a CSV file.  
+
+### **Conditions & Constraints**  
+✔ Employees cannot be assigned themselves as their Secret Santa.  
+✔ If a previous year’s list is provided, the same pairs cannot be repeated.  
+✔ The algorithm ensures a random and fair distribution.  
+✔ The application supports **CSV uploads only** (no manual input).  
+
+---
+
 ## Folder Structure  
 ```
 SECRET-SANTA/
@@ -113,34 +139,6 @@ Bob,bob@example.com,Charlie,charlie@example.com
 Charlie,charlie@example.com,Alice,alice@example.com
 ...
 ```
-
----
-
-## 🎯 Workflow & Business Logic  
-
-### **How the App Works**  
-1. **User Uploads Employee List**  
-   - The user selects a **CSV file** containing employee details (Name, Email).  
-   - Optionally, the user can upload the **previous year's assignments** to prevent duplicate pairings.  
-
-2. **Processing the Assignments**  
-   - The backend reads the employee list and shuffles it.  
-   - It assigns a **Secret Santa** to each employee while ensuring:  
-     - An employee is not assigned to themselves.  
-     - If a previous year’s list exists, the same pair is **not repeated**.  
-     - The algorithm tries to ensure a fair random distribution.  
-
-3. **Displaying & Downloading Results**  
-   - The assignments are displayed in a table format on the frontend.  
-   - Users can **download the assignments** as a CSV file.  
-
-### **Conditions & Constraints**  
-✔ Employees cannot be assigned themselves as their Secret Santa.  
-✔ If a previous year’s list is provided, the same pairs cannot be repeated.  
-✔ The algorithm ensures a random and fair distribution.  
-✔ The application supports **CSV uploads only** (no manual input).  
-
----
 
 ## Testing  
 
